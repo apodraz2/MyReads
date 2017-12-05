@@ -1,26 +1,29 @@
 import React, { Component } from 'react'
 import BookList from './BookList'
 import escapeRegExp from 'escape-string-regexp'
+import * as BooksAPI from './BooksAPI'
 
 class SearchPage extends Component {
   state={
-  	query: ''
+  	query: '',
+    list: []
   }
   
   updateQuery = (query) => {
     this.setState({ query: query })
+    
   }
 
   render() {
-    const bookList = this.props.list
     
     let showingBooks
     if (this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingBooks = bookList.filter((book) => match.test(book.title) || match.test(book.authors[0]))
-    } else {
-      showingBooks = bookList
-    }
+      BooksAPI.search(this.state.query, 10).then((books) => {
+    	
+    	this.setState({list: books })
+		}
+      )
+    } 
     
     return(
      <div className="search-books">
@@ -38,7 +41,8 @@ class SearchPage extends Component {
                 <input type="text" placeholder="Search by title or author" 
       			value={this.state.query}
             	onChange={(event) => this.updateQuery(event.target.value)}/>
-				<BookList list={showingBooks}/>
+
+				<BookList list={this.state.list}/>
               </div>
             </div>
             <div className="search-books-results">
