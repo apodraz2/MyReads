@@ -7,6 +7,8 @@ class BookPage extends Component {
   
   render(){
     const bookList = this.props.list
+    const shelfChange = this.props.shelfChange
+    console.log(bookList)
     return (
       <div className="list-books">
             <div className="list-books-title">
@@ -16,15 +18,15 @@ class BookPage extends Component {
               <div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>               
-                  <BookList list={ bookList.filter((book) => book.shelf === 'currentlyReading') }/>
+                  <BookList list={ bookList.filter((book) => book.shelf === 'currentlyReading') } shelfChange={shelfChange}/>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
-                  <BookList list={ bookList.filter((book) => book.shelf === 'wantToRead') }/>
+                  <BookList list={ bookList.filter((book) => book.shelf === 'wantToRead') } shelfChange={shelfChange}/>
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
-                  <BookList list={ bookList.filter((book) => book.shelf === 'read') }/>
+                  <BookList list={ bookList.filter((book) => book.shelf === 'read') } shelfChange={shelfChange}/>
 				</div>
             </div>
             <div className="open-search">
