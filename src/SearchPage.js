@@ -42,7 +42,7 @@ class SearchPage extends Component {
       			value={this.state.query}
             	onChange={(event) => this.updateQuery(event.target.value)}/>
 
-				<BookList list={this.state.list}/>
+				<BookList list={this.state.list} shelfChange={this.shelfChange}/>
               </div>
             </div>
             <div className="search-books-results">

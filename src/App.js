@@ -10,21 +10,26 @@ class BooksApp extends React.Component {
   state = {
     bookList: []
   }
-  handleChange = (book,event) => {
+  handleChange = (book,shelf) => {
     console.log(book)
-    book.shelf = event.target.value
-    console.log(book)
-    this.setState(this.state.bookList.append(book))
-    
+   
+    BooksAPI.update(book.book, shelf.target.value).then((books) => {
+      console.log(books)
+      this.getBookList()
+    })
+                                                   
+  }
+  
+  getBookList = () => {
+    BooksAPI.getAll().then((books) => {
+      this.setState( {bookList: books} )
+	  
+  	})
   }
   
   componentDidMount() {
     /**making the api call to populate the booklist**/
-    const bookList = BooksAPI.getAll().then((books) => {
-      
-      this.setState( {bookList: books} )
-	  
-  	})
+    this.getBookList()
 	
   }
 
@@ -37,7 +42,7 @@ class BooksApp extends React.Component {
         )}/>
 
         <Route path='/search' render={({ history }) => (
-          <SearchPage />
+          <SearchPage shelfChange={this.handleChange}/>
         )}/>
       </div>
     )
