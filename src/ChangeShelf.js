@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
 
 class ChangeShelf extends Component {
   state = {
@@ -7,21 +6,16 @@ class ChangeShelf extends Component {
     shelf: ''
   }
   
-  handleChange = (event) => {
-    const shelfChange = this.props.shelfChange
-    shelfChange(this.state.book, event) 
-  }
-	
-  componentDidMount(){
-    this.setState({book: this.props, shelf: this.props.shelf}) 
-  }
-  
   render() {
+
 	
+	const shelf = this.props.book.shelf
+    const book = this.props.book
+    
     return(
       <div className="book-shelf-changer">
-        <select defaultValue={this.state.book.shelf} onChange={this.handleChange}>
-          <option value="none" disabled>Move to...</option>
+        <select onChange={(e) => this.props.shelfChange(book, e)} defaultValue={shelf === undefined ? 'none' : shelf} >
+          <option value="not" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
           <option value="read">Read</option>

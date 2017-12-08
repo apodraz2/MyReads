@@ -11,9 +11,10 @@ class BooksApp extends React.Component {
     bookList: []
   }
   handleChange = (book,shelf) => {
+    const value = shelf.target.value === undefined ? 'none' : shelf.target.value
     console.log(book)
-   
-    BooksAPI.update(book.book, shelf.target.value).then((books) => {
+    console.log(value)
+    BooksAPI.update(book.id, value).then((books) => {
       console.log(books)
       this.getBookList()
     })

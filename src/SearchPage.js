@@ -1,31 +1,40 @@
 import React, { Component } from 'react'
 import BookList from './BookList'
-import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
 class SearchPage extends Component {
   state={
   	query: '',
-    list: []
+    list: [],
+    updated: false
   }
   
-  updateQuery = (query) => {
-    this.setState({ query: query })
-    
-  }
+  
 
-  render() {
-    
-    let showingBooks
-    if (this.state.query) {
+  searchDatabase = () => {
+    if (this.state.query && !this.state.updated) {
       BooksAPI.search(this.state.query, 10).then((books) => {
     	
     	this.setState({list: books })
 		}
       )
     } 
+  }
+
+  updateQuery = (query) => {
+    
+    this.setState({ query: query.trim()})
+    this.searchDatabase()
+    this.setState({updated: false})
+  }
+
+  render() {
+    const shelfChange = this.props.shelfChange
+    console.log(this.state.updated)
+    
     
     return(
+    
      <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" href='/'>Close</a>
@@ -42,7 +51,7 @@ class SearchPage extends Component {
       			value={this.state.query}
             	onChange={(event) => this.updateQuery(event.target.value)}/>
 
-				<BookList list={this.state.list} shelfChange={this.shelfChange}/>
+				<BookList list={this.state.list} shelfChange={shelfChange}/>
               </div>
             </div>
             <div className="search-books-results">
