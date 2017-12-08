@@ -30,7 +30,7 @@ class SearchPage extends Component {
 
   render() {
     const shelfChange = this.props.shelfChange
-    console.log(this.state.updated)
+    const existingList = this.props.bookList
     
     
     return(
@@ -51,7 +51,7 @@ class SearchPage extends Component {
       			value={this.state.query}
             	onChange={(event) => this.updateQuery(event.target.value)}/>
 
-				<BookList list={this.state.list} shelfChange={shelfChange}/>
+				<BookList list={this.state.list} shelfChange={shelfChange} existingList={existingList} />
               </div>
             </div>
             <div className="search-books-results">

@@ -12,10 +12,9 @@ class BooksApp extends React.Component {
   }
   handleChange = (book,shelf) => {
     const value = shelf.target.value === undefined ? 'none' : shelf.target.value
-    console.log(book)
-    console.log(value)
-    BooksAPI.update(book.id, value).then((books) => {
-      console.log(books)
+    
+    BooksAPI.update(book, value).then((books) => {
+      
       this.getBookList()
     })
                                                    
@@ -43,7 +42,7 @@ class BooksApp extends React.Component {
         )}/>
 
         <Route path='/search' render={({ history }) => (
-          <SearchPage shelfChange={this.handleChange}/>
+          <SearchPage shelfChange={this.handleChange} bookList={this.state.bookList}/>
         )}/>
       </div>
     )

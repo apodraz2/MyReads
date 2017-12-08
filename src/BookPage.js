@@ -7,7 +7,7 @@ class BookPage extends Component {
   render(){
     const bookList = this.props.list
     const shelfChange = this.props.shelfChange
-    console.log(bookList)
+    
     return (
       <div className="list-books">
             <div className="list-books-title">

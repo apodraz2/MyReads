@@ -7,14 +7,18 @@ class ChangeShelf extends Component {
   }
   
   render() {
-
-	
-	const shelf = this.props.book.shelf
     const book = this.props.book
-    
+    const getShelf = this.props.getShelf
+    const existingList = this.props.existingList
+    let shelf
+    if(existingList){
+      shelf = getShelf(book, existingList)
+    } else {
+      shelf = book.shelf 
+    }
     return(
       <div className="book-shelf-changer">
-        <select onChange={(e) => this.props.shelfChange(book, e)} defaultValue={shelf === undefined ? 'none' : shelf} >
+        <select onChange={(e) => this.props.shelfChange(book, e)} defaultValue={shelf} >
           <option value="not" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
